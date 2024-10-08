@@ -212,3 +212,30 @@ nav a {
 #fileModal img {
   max-height: 75vh;
 }
+
+/* Add these custom classes to your Tailwind configuration or custom CSS */
+.tooltip-parent {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 10;
+}
+
+.tooltip-parent:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

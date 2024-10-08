@@ -204,12 +204,27 @@
                 </div>
               </td>
               <td class="py-3 px-6 size-fit sticky-col">
-                <div class="complete-justificativa-buttons">
-                  <button class="material-symbols-outlined p-1 button-aproved">check_circle</span></button>
-                  <button class="material-symbols-outlined p-1 button-deny">cancel</span></button>
-                  <button class="material-symbols-outlined p-1 button-see-more">visibility</span></button>
-                  <button class="material-symbols-outlined p-1 button-apuracao">insert_chart</span></button>
-                </div>
+                <div class="complete-justificativa-buttons space-x-2">
+                  <button class="p-1 button-aproved relative tooltip-parent">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span class="tooltip-text">Aprovar</span>
+                  </button>
+                
+                  <button class="p-1 button-deny relative tooltip-parent">
+                    <span class="material-symbols-outlined">cancel</span>
+                    <span class="tooltip-text">Recusar</span>
+                  </button>
+                
+                  <button class="p-1 button-see-more relative tooltip-parent">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <span class="tooltip-text">Ver mais</span>
+                  </button>
+                
+                  <button class="p-1 button-apuracao relative tooltip-parent">
+                    <span class="material-symbols-outlined">insert_chart</span>
+                    <span class="tooltip-text">Apuração</span>
+                  </button>
+                </div>                
                 <div class="recusa-form items-center justify-center flex-col space-x-2">
                   <form class="space-y-1 w-full">
                     <label for="recusa-motivo">Motivo da recusa:</label>
@@ -294,6 +309,67 @@
       </div>
     </div>
   </div>
+  <!-- Modal for Justificativa Details -->
+<div id="justificativaModal" class="fixed z-10 inset-0 overflow-y-auto hidden selected" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+      <!-- Modal content -->
+      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-2/5">
+          <div class="bg-white px-4 pt-5 pb-4">
+              <div>
+                  <div class="mt-3">
+                      <h3 class="text-lg leading-6 font-medium text-gray-900 text-center" id="modal-title">Detalhes da Justificativa</h3>
+                      <div class="mt-2 flex space-x-2">
+                        <div>
+                          <p><strong>Nome:</strong><span class="py-2 px-1" data-modal-nome></span></p>
+                          <p><strong>Matrícula:</strong><span class="py-2 px-1" data-modal-matricula></span></p>
+                          <p><strong>Localização:</strong><span class="py-2 px-1" data-modal-local></span></p>
+                          <p data-modal-mensagem></p>
+                          <p class="text-sm pt-1">enviado às <span data-modal-timestamp></span></p>
+                          <p class="flex items-center text-yellow-500 font-bold pt-2"><span class="material-symbols-outlined text-base">fiber_manual_record</span>
+                            <span class="status-text" data-modal-status>Pendente</span>
+                          </p>
+                          <p class="flex items-center font-bold space-x-2 pt-4">
+                            <span class="material-symbols-outlined">more_time</span><span data-modal-adjustmentType></span>
+                          </p>
+                          <p class="pt-1" data-modal-day></p>
+                          <ul class="flex items-center space-x-2">
+                            <li class="time-box time-box-added"><span class="material-symbols-outlined text-base">add</span><span data-modal-editedHour>08:00</span></li>
+                            <li class="time-box" data-modal-register-1>12:00</li>
+                            <li class="time-box" data-modal-register-2>13:00</li>
+                            <li class="time-box" data-modal-register-3>18:00</li>
+                          </ul>
+                          <ul class="hours pt-2">
+                            <li><span class="font-bold">Horas antes do ajuste: </span><span data-modal-totalBefore>-07:00</span></li>
+                            <li><span class="font-bold">Horas depois do ajuste: </span><span data-modal-totalAfter>08:00</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse space-x-2">
+            <div class="flex items-center flex-col justify-between space-x-2 ml-2">
+                <button class="bg-green-500 text-white px-4 py-2 rounded-md size-fit button-aproved">
+                  Aprovar
+                </button>
+              </div>
+              <div class="flex items-center flex-col">
+                <button class="bg-red-500 text-white px-4 py-2 rounded-md size-fit button-deny">
+                  Recusar
+                </button>
+              </div>
+              <div class="flex items-center flex-col">
+                <button id="closeModalButton" class="bg-blue-500 text-white px-4 py-2 rounded-md size-fit">Fechar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
   <script src="index.js"></script>
  </body>
 </html>

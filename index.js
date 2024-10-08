@@ -158,6 +158,9 @@ function renderFastTableData() {
     newRow.querySelector("[data-total-before]").textContent = justificativa.totalBefore;
     newRow.querySelector("[data-total-after]").textContent = justificativa.totalAfter;
     newRow.querySelector("[data-status]").textContent = justificativa.status;
+    if(justificativa.file){
+      newRow.querySelector("[data-file-button]").classList.remove('hidden')
+    }
     newRow.classList.add('justificativa-item');
 
     // Append the new row to the table body
@@ -219,6 +222,8 @@ function renderCompleteTableData() {
     newRow.querySelector("[data-status]").textContent = justificativa.status;
     newRow.classList.add('justificativa-item');
     newRow.classList.remove('template-row');
+    const seeMoreButton = newRow.querySelector('.button-see-more');
+    seeMoreButton.setAttribute('data-index', index);
 
     const checkboxLabel = newRow.querySelector('.checkbox-label');
     checkboxLabel.htmlFor = `checkbox${index + 1}`;
@@ -400,6 +405,14 @@ document.addEventListener('keydown', (e) => {
         nextItem.classList.add('selected');
       }
     }
+
+    // Check if the F key is pressed
+    if (e.key === 'f') {
+      const seeFileButton = selectedItem.querySelector('.seeFileButton');
+      if (seeFileButton) {
+        seeFileButton.click();
+      }
+    }
   }
 });
 document.addEventListener("DOMContentLoaded", function () {
@@ -550,4 +563,52 @@ document.addEventListener('click', (e) => {
     fileModal.classList.add('hidden');  // Add 'hidden' class to close the modal
   }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Attach click event listener for the "Ver mais" buttons
+  const seeMoreButtons = document.querySelectorAll('.button-see-more');
+
+  seeMoreButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const index = button.getAttribute('data-index'); // Get the index from the button
+      const justificativa = justificativas[index]; // Retrieve the justificativa from the array
+
+      if (!justificativa) {
+        console.error('Justificativa not found in the array.');
+        return;
+      }
+
+      // Get the modal element
+      const justificativaModal = document.getElementById('justificativaModal');
+      if (!justificativaModal) {
+        console.error('Modal element not found.');
+        return;
+      }
+
+      // Populate the modal with data using data-* attributes
+      justificativaModal.querySelector('[data-modal-nome]').textContent = justificativa.nome;
+      justificativaModal.querySelector('[data-modal-matricula]').textContent = justificativa.matricula;
+      justificativaModal.querySelector('[data-modal-local]').textContent = justificativa.local;
+      justificativaModal.querySelector('[data-modal-mensagem]').textContent = justificativa.mensagem;
+      justificativaModal.querySelector('[data-modal-timestamp]').textContent = justificativa.timestamp;
+      justificativaModal.querySelector('[data-modal-adjustmentType]').textContent = justificativa.adjustmentType;
+      justificativaModal.querySelector('[data-modal-day]').textContent = justificativa.day;
+      justificativaModal.querySelector('[data-modal-editedHour]').textContent = justificativa.editedHour;
+      justificativaModal.querySelector('[data-modal-totalBefore]').textContent = justificativa.totalBefore || 'N/A';
+      justificativaModal.querySelector('[data-modal-totalAfter]').textContent = justificativa.totalAfter || 'N/A';
+      justificativaModal.querySelector('[data-modal-status]').textContent = justificativa.status;
+
+      // Show the modal
+      justificativaModal.classList.remove('hidden');
+    });
+  });
+
+  // Close the modal
+  const closeModalButton = document.getElementById('closeModalButton');
+  closeModalButton.addEventListener('click', function () {
+    const justificativaModal = document.getElementById('justificativaModal');
+    justificativaModal.classList.add('hidden');
+  });
+});
+
 
