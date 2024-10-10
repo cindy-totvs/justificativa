@@ -12,14 +12,14 @@
   padding: 1rem;
   color: rgb(71 85 105);
 }
-.selected.justificativa-item {
+#fast-table .selected.justificativa-item {
   border: 2px solid #3498db;
   border-radius: 0.5rem;
   box-shadow: 0px 0px 4px 1px #95d1fa;
   position: relative;
   z-index: 1;
 }
-.justificativa-table tr.selected.justificativa-item {
+#fast-table.justificativa-table tr.selected.justificativa-item {
   background-color: #fff;
 }
 .selected .empty-spacer{

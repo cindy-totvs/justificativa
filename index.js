@@ -187,8 +187,6 @@ function renderFastTableData() {
       });
     });
   }
-
-  
 }
 
 function renderCompleteTableData() {
@@ -200,9 +198,11 @@ function renderCompleteTableData() {
     const newRow = templateRow.cloneNode(true);
     newRow.style.display = ""; // Make it visible
     newRow.removeAttribute("id"); // Remove the id to avoid duplicates
+    newRow.classList.remove('template-row');
 
     // Assign a unique id to each row
-    newRow.id = `item${index + 1}`;
+    newRow.id = `item${index + 1}`;  // <-- Ensure this ID is correctly set
+    console.log(`Assigned ID to row: item${index + 1}`); // Log ID assignment
 
     // Populate the row using data-* attributes
     newRow.querySelector("[data-name]").textContent = justificativa.nome;
@@ -213,135 +213,98 @@ function renderCompleteTableData() {
     newRow.querySelector("[data-adjustment-type]").textContent = justificativa.adjustmentType;
     newRow.querySelector("[data-day]").textContent = justificativa.day;
     newRow.querySelector("[data-edited-hour]").textContent = justificativa.editedHour;
-    if(justificativa.reason){
+    newRow.querySelector("[data-tr-index]").id = 'see-more-'+ newRow.id;
+    if(justificativa.reason) {
       newRow.querySelector("[data-reason]").textContent = justificativa.reason;
     }
-    if(justificativa.file){
+    if(justificativa.file) {
       newRow.querySelector("[data-file-button]").textContent = justificativa.file;
     }
     newRow.querySelector("[data-status]").textContent = justificativa.status;
-    newRow.classList.add('justificativa-item');
-    newRow.classList.remove('template-row');
-    const seeMoreButton = newRow.querySelector('.button-see-more');
-    seeMoreButton.setAttribute('data-index', index);
-
-    const checkboxLabel = newRow.querySelector('.checkbox-label');
-    checkboxLabel.htmlFor = `checkbox${index + 1}`;
-    const checkboxInput = newRow.querySelector('.mdl-checkbox__input');
-    checkboxInput.id =  `checkbox${index + 1}`;
+    newRow.classList.add('justificativa-item'); // Add class to identify each row
 
     // Append the new row to the table body
     tableBody.appendChild(newRow);
   });
 }
 
+
+
 document.addEventListener("DOMContentLoaded", renderCompleteTableData);
 document.addEventListener("DOMContentLoaded", renderFastTableData);
 
-// Add an event listener to the buttons
+// Handle button clicks for both fast and complete tables
 document.addEventListener('click', (e) => {
-  // Check if the clicked element is a button
-  if (e.target.classList.contains('button-aproved') || e.target.classList.contains('button-deny') || e.target.classList.contains('button-apuracao') || e.target.classList.contains('button-file')) {
-    // Get the parent element (the justificativa item)
-    const justificativaItem = e.target.closest('.justificativa-item');
-
-    // Get the status container
+  const clickedButton = e.target.closest('.button-aproved, .button-deny, .button-apuracao, .button-file, .button-voltar');
+  if (clickedButton) {
+    const justificativaItem = clickedButton.closest('.justificativa-item');
     const statusContainer = justificativaItem.querySelector('.status');
-    if (statusContainer) {
-      // Check if status is pendente
-      const statusText = statusContainer.querySelector('.status-text');
-      const isEditLocked = justificativaItem.classList.contains('edit-lock')
-      if (statusText.textContent != 'Pendente' && !isEditLocked && !unlockEditClicked) {
-        justificativaItem.classList.add('edit-lock');
-      }
-      // Check if edit-unlock is clicked
-      var unlockEditClicked = e.target.classList.contains('edit-unlock')
-      if (unlockEditClicked) {
-        justificativaItem.classList.remove('edit-lock');
-      }
-      else {
-        // Check if the button is the aprovar button
-        if (e.target.classList.contains('button-aproved')) {
-          // Update the status container with the new status
-          statusContainer.innerHTML = '';
-          const newStatusP = document.createElement('p');
-          const newStatus = document.createElement('span');
-          newStatus.textContent = 'Aprovado';
-          const xIcon = document.createElement('span');
-          xIcon.classList.add('material-symbols-outlined', 'text-sm');
-          xIcon.textContent = 'check_circle';
-          newStatusP.classList.add('flex', 'items-center', 'justify-center', 'text-green-500', 'font-bold', 'space-x-1', 'status-text')
-          newStatusP.appendChild(xIcon);
-          newStatusP.appendChild(newStatus);
-          statusContainer.appendChild(newStatusP);
+    if (!statusContainer) return;
 
-          // Select the next item if in fast table
-          if (/index/.test(window.location.href)){
-            // Remove the selected class from the current item
-            justificativaItem.classList.remove('selected');
+    const isFastTable = document.getElementById("fast-table"); // Check if we're in fast mode
+    const nextItem = justificativaItem.nextElementSibling;
 
-            const nextItem = justificativaItem.nextElementSibling;
-            if (nextItem) {
-              nextItem.classList.add('selected');
-            }
-         }
+    // Handle approval
+    if (clickedButton.classList.contains('button-aproved')) {
+      statusContainer.innerHTML = `
+        <p class="flex items-center justify-center text-green-500 font-bold space-x-1">
+          <span class="material-symbols-outlined text-sm">check_circle</span>
+          <span class="status-text">Aprovado</span>
+        </p>`;
+      justificativaItem.classList.remove('selected');
+
+      // Auto-select the next item in fast mode
+      if (isFastTable && nextItem) {
+        nextItem.classList.add('selected');
+      }
+    }
+
+    // Handle rejection
+    if (clickedButton.classList.contains('button-deny')) {
+      justificativaItem.classList.add('recusa-mode');
+      const reasonInput = justificativaItem.querySelector('#recusa-motivo');
+      reasonInput.focus();  // Focus the input field
+      justificativaItem.querySelector('.recusa-form').addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const reason = justificativaItem.querySelector('#recusa-motivo').value;
+
+        statusContainer.innerHTML = `
+          <p class="flex items-center text-red-500 font-bold space-x-1">
+            <span class="material-symbols-outlined text-sm">do_not_disturb_on</span>
+            <span class="status-text">Recusado</span>
+          </p>
+          <p>${reason}</p>`;
+        justificativaItem.classList.remove('recusa-mode');
+        justificativaItem.classList.remove('selected');
+
+        // Auto-select the next item in fast mode
+        if (isFastTable && nextItem) {
+          nextItem.classList.add('selected');
         }
+      });
+    }
+    
+    // Handle voltar
+    if (clickedButton.classList.contains('button-voltar')) {
+      justificativaItem.classList.remove('recusa-mode');
+    }
 
-        // Check if the button is the recusar button
-        if (e.target.classList.contains('button-deny')) {
-          // Show the recusa form
-          justificativaItem.classList.add('recusa-mode');
-
-          //Focus on the input
-          justificativaItem.querySelector('input').focus();
-
-          // Add an event listener to the form
-          justificativaItem.querySelector('.recusa-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Update the status container with the new status
-            statusContainer.innerHTML = '';
-            const newStatusP = document.createElement('p');
-            const newStatus = document.createElement('span');
-            newStatus.textContent = 'Recusado';
-            const xIcon = document.createElement('span');
-            xIcon.classList.add('material-symbols-outlined', 'text-sm');
-            xIcon.textContent = 'do_not_disturb_on';
-            newStatusP.classList.add('flex', 'items-center', 'text-red-500', 'font-bold', 'space-x-1')
-            newStatusP.appendChild(xIcon);
-            newStatusP.appendChild(newStatus);
-            statusContainer.appendChild(newStatusP);
-
-            // Add the reason for rejection below the status
-            const reason = document.createElement('p');
-            reason.textContent = justificativaItem.querySelector('#recusa-motivo').value;
-            statusContainer.appendChild(reason);
-
-            // Hide the recusa form
-            justificativaItem.classList.remove('recusa-mode');
-
-            // Remove the selected class from the current item
-            justificativaItem.classList.remove('selected');
-
-            // Select the next item if fast table
-            if (/index/.test(window.location.href)){
-            const nextItem = justificativaItem.nextElementSibling;
-              if (nextItem) {
-                nextItem.classList.add('selected');
-              }
-            }
-          });
-          document.addEventListener('click', (e) => {
-            // Check if back is clicked
-            if (e.target.classList.contains('back')) {
-              justificativaItem.classList.remove('recusa-mode');
-            }
-          })
-        }
-      }
+    // Handle file viewing (e.g., medical certificate)
+    if (clickedButton.classList.contains('button-file')) {
+      const fileModal = document.getElementById('fileModal');
+      fileModal.classList.remove('hidden');
     }
   }
 });
+
+// Close file modal
+document.addEventListener('click', (e) => {
+  const fileModal = document.getElementById('fileModal');
+  if (e.target.id === 'cancelModal' || e.target.classList.contains('modal-background')) {
+    fileModal.classList.add('hidden');
+  }
+});
+
 
 // Add an event listener to the document for keyboard shortcuts
 document.addEventListener('keydown', (e) => {
@@ -407,14 +370,19 @@ document.addEventListener('keydown', (e) => {
     }
 
     // Check if the F key is pressed
-    if (e.key === 'f') {
-      const seeFileButton = selectedItem.querySelector('.seeFileButton');
-      if (seeFileButton) {
-        seeFileButton.click();
+      if (e.ctrlKey) {
+        if (e.key === 'Enter') {
+          console.log("f pressed")
+          const seeFileButton = selectedItem.querySelector('.button-file');
+          if (seeFileButton) {
+            seeFileButton.click();
+          }
+        }
       }
     }
-  }
 });
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const scrollableTable = document.querySelector(".scrollable-table");
   const gradientLeft = document.querySelector(".scroll-gradient-left");
@@ -564,51 +532,102 @@ document.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Attach click event listener for the "Ver mais" buttons
-  const seeMoreButtons = document.querySelectorAll('.button-see-more');
+// Handle opening the "Detalhes da Justificativa" modal
+document.addEventListener('click', function (e) {
+  const seeMoreButtons = e.target.closest('.button-see-more');
+  if (seeMoreButtons) {
+    let btnID = seeMoreButtons.id; // Get the index of the justification
+    let index = btnID.replace(/^see-more-item/, '');  
+    const justificativa = justificativas[index]; // Fetch the specific justificativa data
 
-  seeMoreButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const index = button.getAttribute('data-index'); // Get the index from the button
-      const justificativa = justificativas[index]; // Retrieve the justificativa from the array
+    if (!justificativa) return;
 
-      if (!justificativa) {
-        console.error('Justificativa not found in the array.');
-        return;
-      }
-
-      // Get the modal element
-      const justificativaModal = document.getElementById('justificativaModal');
-      if (!justificativaModal) {
-        console.error('Modal element not found.');
-        return;
-      }
-
-      // Populate the modal with data using data-* attributes
-      justificativaModal.querySelector('[data-modal-nome]').textContent = justificativa.nome;
-      justificativaModal.querySelector('[data-modal-matricula]').textContent = justificativa.matricula;
-      justificativaModal.querySelector('[data-modal-local]').textContent = justificativa.local;
-      justificativaModal.querySelector('[data-modal-mensagem]').textContent = justificativa.mensagem;
-      justificativaModal.querySelector('[data-modal-timestamp]').textContent = justificativa.timestamp;
-      justificativaModal.querySelector('[data-modal-adjustmentType]').textContent = justificativa.adjustmentType;
-      justificativaModal.querySelector('[data-modal-day]').textContent = justificativa.day;
-      justificativaModal.querySelector('[data-modal-editedHour]').textContent = justificativa.editedHour;
-      justificativaModal.querySelector('[data-modal-totalBefore]').textContent = justificativa.totalBefore || 'N/A';
-      justificativaModal.querySelector('[data-modal-totalAfter]').textContent = justificativa.totalAfter || 'N/A';
-      justificativaModal.querySelector('[data-modal-status]').textContent = justificativa.status;
-
-      // Show the modal
-      justificativaModal.classList.remove('hidden');
-    });
-  });
-
-  // Close the modal
-  const closeModalButton = document.getElementById('closeModalButton');
-  closeModalButton.addEventListener('click', function () {
+    // Get the modal and populate its fields
     const justificativaModal = document.getElementById('justificativaModal');
-    justificativaModal.classList.add('hidden');
-  });
+    justificativaModal.querySelector('[data-modal-nome]').textContent = justificativa.nome;
+    justificativaModal.querySelector('[data-modal-matricula]').textContent = justificativa.matricula;
+    justificativaModal.querySelector('[data-modal-local]').textContent = justificativa.local;
+    justificativaModal.querySelector('[data-modal-mensagem]').textContent = justificativa.mensagem;
+    justificativaModal.querySelector('[data-modal-timestamp]').textContent = justificativa.timestamp;
+    justificativaModal.querySelector('[data-modal-adjustmentType]').textContent = justificativa.adjustmentType;
+    justificativaModal.querySelector('[data-modal-day]').textContent = justificativa.day;
+    justificativaModal.querySelector('[data-modal-editedHour]').textContent = justificativa.editedHour;
+    justificativaModal.querySelector('[data-modal-status]').textContent = justificativa.status;
+
+    // Remove 'selected' class from any other item
+    const currentSelected = document.querySelector('.justificativa-item.selected');
+    if (currentSelected) {
+      currentSelected.classList.remove('selected');
+    }
+
+    // Add 'selected' class to the clicked item
+    const justificativaItem = document.getElementById('item' + index);
+    console.log(justificativaItem); // Check if this row is found
+    if (justificativaItem) {
+      justificativaItem.classList.add('selected');
+      console.log(`Row with ID item${index} found and selected.`);
+    } else {
+      console.error(`No table row found with ID item${index}`);
+    }
+
+    // Show the modal
+    justificativaModal.classList.remove('hidden');
+  }
+  if (e.target.id === 'closeModalButton'  || e.target.id === `justificativaModal`) {
+    justificativaModal.classList.add('hidden'); // Close the modal
+  }
 });
 
 
+
+
+// Handle approval and denial from the "Detalhes da Justificativa" modal
+document.addEventListener('click', function (e) {
+  const cancelModalButton = document.getElementById('cancelModal');
+  const justificativaModal = document.getElementById('justificativaModal');
+  const selectedItem = document.querySelector('.justificativa-item.selected'); // Get the currently selected justification
+
+  if (selectedItem) {
+    if (e.target.classList.contains('button-aproved')) {
+      // Approve the selected justification
+      justificativaModal.querySelector('[data-modal-status]').textContent = 'Aprovado';
+      const statusContainer = selectedItem.querySelector('.status');
+      statusContainer.innerHTML = `
+        <p class="flex items-center justify-center text-green-500 font-bold space-x-1">
+          <span class="material-symbols-outlined text-sm">check_circle</span>
+          <span class="status-text">Aprovado</span>
+        </p>`;
+      justificativaModal.classList.add('hidden'); // Close the modal
+    }
+
+    if (e.target.classList.contains('button-deny')) {
+      // Show the refusal form
+      justificativaModal.querySelector('.recusa-form').classList.remove('hidden');
+
+      
+      // Focus the input field for the rejection reason inside the modal
+      const recusaInput = justificativaModal.querySelector('#recusa-motivo');
+      recusaInput.focus();  // Focus the input field
+
+    }
+
+    justificativaModal.querySelector('.recusa-form').addEventListener('submit', function(ev) {
+      ev.preventDefault();
+      const reason = justificativaModal.querySelector('#recusa-motivo').value;
+
+      // Update modal status to "Recusado"
+      justificativaModal.querySelector('[data-modal-status]').textContent = 'Recusado';
+
+      // Update the table row status to "Recusado" with the provided reason
+      const statusContainer = selectedItem.querySelector('.status');
+      statusContainer.innerHTML = `
+        <p class="flex items-center text-red-500 font-bold space-x-1">
+          <span class="material-symbols-outlined text-sm">do_not_disturb_on</span>
+          <span class="status-text">Recusado</span>
+        </p>
+        <p>${reason}</p>`;
+
+      justificativaModal.classList.add('hidden'); // Close the modal after submission
+    });
+  }
+});
