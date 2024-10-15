@@ -780,3 +780,75 @@ document.addEventListener('click', function (e) {
     justificativaModal.classList.add('hidden'); // Close the modal
   }
 });
+
+// Handle filters
+document.addEventListener('DOMContentLoaded', function () {
+  const applyFilterButton = document.querySelector('button.filter-button');
+  const clearFilterButton = document.querySelector('.close-filter-button'); // Select the clear filters button
+  var tableBody = document.getElementById('complete-table-body');
+  if (!tableBody) tableBody = document.getElementById('fast-table-body');
+  var templateRow = document.getElementById('complete-template-row'); // Ensure template row is defined
+  if (!templateRow) templateRow = document.getElementById('fast-template-row');
+
+
+  applyFilterButton.addEventListener('click', function() {
+    console.log('Filter button clicked!'); // This will confirm the click event
+
+    const startDateInput = document.getElementById('start-date').value;
+    const endDateInput = document.getElementById('end-date').value;
+
+    const startDate = new Date(startDateInput);
+    const endDate = new Date(endDateInput);
+    const status = document.getElementById('status').value;
+
+    console.log(`Start Date: ${startDate}, End Date: ${endDate}, Status: ${status}`);
+
+    // Filter the justificativas array based on selected filters
+    const filteredJustificativas = justificativas.filter(j => {
+      // Convert the 'day' format to a recognizable date
+      const dayParts = j.day.split(', ')[1].split('/');
+      const justificationDate = new Date(`${dayParts[2]}-${dayParts[1]}-${dayParts[0]}`); // format: YYYY-MM-DD
+
+      // Log the justification date
+      console.log(`Justification for ${j.nome}: ${justificationDate}`);
+
+      // Log the matching conditions
+      const matchesStatus = status === 'Todos' || j.status === status;
+      const matchesStartDate = isNaN(startDate) || startDate <= justificationDate;
+      const matchesEndDate = isNaN(endDate) || justificationDate <= endDate;
+
+      console.log(`Matches: ${matchesStatus}, Start Date Match: ${matchesStartDate}, End Date Match: ${matchesEndDate}`);
+
+      // Return true if all filters match
+      return matchesStatus && matchesStartDate && matchesEndDate;
+    });
+
+    console.log(`Filtered Justificativas:`, filteredJustificativas);
+
+    // Clear the existing table but keep the template row
+    tableBody.innerHTML = ''; // Clear previous rows
+
+    // Re-render the filtered table
+    filteredJustificativas.forEach((justificativa, index) => {
+      const newRow = createRowFromTemplate(templateRow, justificativa, index);
+      tableBody.appendChild(newRow);
+    });
+
+    // Show the clear filter button
+    clearFilterButton.classList.remove('hidden');
+  });
+
+  // Handle the clear filter button click
+  clearFilterButton.addEventListener('click', function() {
+    // Reset filter inputs
+    document.getElementById('start-date').value = '';
+    document.getElementById('end-date').value = '';
+    document.getElementById('status').value = 'Todos'; // Reset to default status
+
+    // Re-render all justifications
+    renderAllJustifications();
+
+    // Hide the clear filter button
+    clearFilterButton.classList.add('hidden');
+  });
+});
