@@ -122,7 +122,7 @@ nav a {
   z-index: 1;
 }
 .sticky-status {  
-  right: 179px;
+  right: 190px;
 }
 /* Optional: Make sure the table rows' height is consistent */
 #complete-table td, 
@@ -157,7 +157,7 @@ nav a {
 }
 
 .scroll-gradient-right {
-  right: 283;
+  right: 293;
   background: linear-gradient(to left, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0));
 }
 

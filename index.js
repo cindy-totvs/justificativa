@@ -293,6 +293,9 @@ document.addEventListener('click', (e) => {
     if (clickedButton.classList.contains('button-file')) {
       const fileModal = document.getElementById('fileModal');
       fileModal.classList.remove('hidden');
+      // Focus the input field for the rejection reason inside the modal
+      const closeButton = fileModal.querySelector('#cancelModal');
+      closeButton.focus();  // Focus the input field
     }
   }
 });
