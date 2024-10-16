@@ -8,7 +8,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quinta, 05/06/2024",
     editedHour: "07:55",
-    batidas: ["07:55", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:40",
     totalAfter: "07:55",
     status: "Pendente"
@@ -37,7 +37,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Segunda, 02/06/2024",
     editedHour: "08:10",
-    batidas: ["08:10", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -51,7 +51,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Sexta, 01/06/2024",
     editedHour: "09:00",
-    batidas: ["09:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:15",
     totalAfter: "07:30",
     status: "Pendente"
@@ -64,8 +64,8 @@ const justificativas = [
     timestamp: "11:22 - 15/06/24",
     adjustmentType: "Desconsiderar batida",
     day: "Segunda, 15/06/2024",
-    editedHour: "08:10",
-    batidas: ["07:55", "12:00", "12:30", "17:10"],
+    editedHour: "07:55",
+    batidas: ["08:10", "12:00", "12:30", "17:10"],
     totalBefore: "-07:30",
     totalAfter: "07:45",
     status: "Pendente"
@@ -96,7 +96,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Terça, 10/06/2024",
     editedHour: "08:05",
-    batidas: ["08:05", "12:00", "13:00"],
+    batidas: ["11:05", "12:00", "13:00"],
     totalBefore: "-07:45",
     totalAfter: "08:00",
     status: "Pendente"
@@ -124,7 +124,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quarta, 19/06/2024",
     editedHour: "08:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
@@ -138,7 +138,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quarta, 18/06/2024",
     editedHour: "09:00",
-    batidas: ["09:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-06:00",
     totalAfter: "07:00",
     status: "Recusado",
@@ -153,7 +153,7 @@ const justificativas = [
     adjustmentType: "Desconsiderar batida",
     day: "Terça, 17/06/2024",
     editedHour: "09:15",
-    batidas: ["07:55", "12:00", "13:00", "17:00", "18:00"],
+    batidas: ["12:00", "13:00", "17:00", "18:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -167,7 +167,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Segunda, 16/06/2024",
     editedHour: "10:00",
-    batidas: ["08:00", "12:00", "13:00"],
+    batidas: ["12:00", "13:00", "18:00"],
     totalBefore: "-06:30",
     totalAfter: "07:30",
     status: "Aprovado",
@@ -198,7 +198,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Sexta, 20/06/2024",
     editedHour: "08:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
@@ -245,7 +245,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Sexta, 20/06/2024",
     editedHour: "08:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Recusado",
@@ -260,7 +260,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quinta, 08/10/2024",
     editedHour: "10:00",
-    batidas: ["10:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
@@ -274,7 +274,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Terça, 15/10/2024",
     editedHour: "09:00",
-    batidas: ["09:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -288,7 +288,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quarta, 14/10/2024",
     editedHour: "08:05",
-    batidas: ["08:05", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-06:45",
     totalAfter: "08:00",
     status: "Pendente"
@@ -302,7 +302,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Quinta, 10/10/2024",
     editedHour: "08:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
@@ -316,7 +316,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Domingo, 12/10/2024",
     editedHour: "08:05",
-    batidas: ["08:05", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:15",
     totalAfter: "08:00",
     status: "Pendente"
@@ -345,7 +345,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Sexta, 12/10/2024",
     editedHour: "11:45",
-    batidas: ["11:45", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
@@ -359,7 +359,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Segunda, 13/10/2024",
     editedHour: "17:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["08:00", "12:00", "13:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Recusado",
@@ -374,7 +374,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Segunda, 14/10/2024",
     editedHour: "08:00",
-    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -388,7 +388,7 @@ const justificativas = [
     adjustmentType: "Inclusão de batida",
     day: "Sexta, 13/10/2024",
     editedHour: "08:55",
-    batidas: ["08:55", "12:00", "13:00", "17:00"],
+    batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-06:45",
     totalAfter: "08:00",
     status: "Pendente"
@@ -998,9 +998,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var templateRow = document.getElementById('complete-template-row'); // Ensure template row is defined
   if (!templateRow) templateRow = document.getElementById('fast-template-row');
 
-
-  applyFilterButton.addEventListener('click', function() {
-    console.log('Filter button clicked!'); // This will confirm the click event
+  // Apply the filters when the filter button is clicked
+  applyFilterButton.addEventListener('click', function () {
+    console.log('Filter button clicked!'); // Confirm the click event
 
     const startDateInput = document.getElementById('start-date').value;
     const endDateInput = document.getElementById('end-date').value;
@@ -1015,39 +1015,42 @@ document.addEventListener('DOMContentLoaded', function () {
     const filteredJustificativas = justificativas.filter(j => {
       // Convert the 'day' format to a recognizable date
       const dayParts = j.day.split(', ')[1].split('/');
-      const justificationDate = new Date(`${dayParts[2]}-${dayParts[1]}-${dayParts[0]}`); // format: YYYY-MM-DD
+      const justificationDate = new Date(`${dayParts[2]}-${dayParts[1]}-${dayParts[0]}`);
 
-      // Log the justification date
-      console.log(`Justification for ${j.nome}: ${justificationDate}`);
-
-      // Log the matching conditions
       const matchesStatus = status === 'Todos' || j.status === status;
       const matchesStartDate = isNaN(startDate) || startDate <= justificationDate;
       const matchesEndDate = isNaN(endDate) || justificationDate <= endDate;
 
-      console.log(`Matches: ${matchesStatus}, Start Date Match: ${matchesStartDate}, End Date Match: ${matchesEndDate}`);
-
-      // Return true if all filters match
       return matchesStatus && matchesStartDate && matchesEndDate;
     });
 
     console.log(`Filtered Justificativas:`, filteredJustificativas);
 
-    // Clear the existing table but keep the template row
-    tableBody.innerHTML = ''; // Clear previous rows
+    // Clear the existing table, keeping the template row intact
+    tableBody.querySelectorAll('.justificativa-item').forEach(row => row.remove());
 
-    // Re-render the filtered table
+    // Re-render the filtered table using your existing populate function
     filteredJustificativas.forEach((justificativa, index) => {
-      const newRow = createRowFromTemplate(templateRow, justificativa, index);
+      const newRow = templateRow.cloneNode(true);
+      newRow.style.display = ''; // Make it visible
+      newRow.removeAttribute('id'); // Remove id to avoid duplicates
+      newRow.id = `item${index}`; // Unique id
+
+      // Use your existing populateRowData function
+      populateRowData(newRow, justificativa);
+
       tableBody.appendChild(newRow);
     });
 
     // Show the clear filter button
     clearFilterButton.classList.remove('hidden');
+
+    // Auto-select the first item after filtering
+    autoSelectFirstItem('.justificativa-item');
   });
 
   // Handle the clear filter button click
-  clearFilterButton.addEventListener('click', function() {
+  clearFilterButton.addEventListener('click', function () {
     // Reset filter inputs
     document.getElementById('start-date').value = '';
     document.getElementById('end-date').value = '';
@@ -1060,3 +1063,46 @@ document.addEventListener('DOMContentLoaded', function () {
     clearFilterButton.classList.add('hidden');
   });
 });
+
+// Function to auto-select the first item in the table
+function autoSelectFirstItem(selector) {
+  const items = document.querySelectorAll(selector);
+  if (items.length > 0) {
+    // Remove any existing selection
+    document.querySelectorAll('.justificativa-item.selected').forEach(item => {
+      item.classList.remove('selected');
+    });
+
+    // Select the first item
+    items[0].classList.add('selected');
+  }
+}
+
+// Reuse your existing populateRowData function
+// I'm assuming this is already in your file, so no need to rewrite it
+
+// Function to reset the table (show all justificativas)
+function renderAllJustifications() {
+  const tableBody = document.getElementById('complete-table-body');
+  const templateRow = document.getElementById('complete-template-row');
+
+  // Clear existing rows
+  tableBody.querySelectorAll('.justificativa-item').forEach(row => row.remove());
+
+  // Re-populate the table with all justificativas
+  justificativas.forEach((justificativa, index) => {
+    const newRow = templateRow.cloneNode(true);
+    newRow.style.display = ''; // Make it visible
+    newRow.removeAttribute('id'); // Remove id to avoid duplicates
+    newRow.id = `item${index}`; // Unique id
+
+    // Use your existing populateRowData function
+    populateRowData(newRow, justificativa);
+
+    tableBody.appendChild(newRow);
+  });
+
+  // Auto-select the first item after resetting the table
+  autoSelectFirstItem('.justificativa-item');
+}
+
