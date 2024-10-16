@@ -194,9 +194,9 @@ const justificativas = [
     matricula: "839583",
     local: "Matriz",
     mensagem: "Realizei um ajuste no ponto devido a uma inconsistência no horário registrado.",
-    timestamp: "08:03 - 21/06/24",
+    timestamp: "08:03 - 21/09/24",
     adjustmentType: "Inclusão de batida",
-    day: "Sexta, 20/06/2024",
+    day: "Sexta, 20/09/2024",
     editedHour: "08:00",
     batidas: ["12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
@@ -249,7 +249,7 @@ const justificativas = [
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Recusado",
-    responsible: "Fulano de Tal"
+    responsible: "Ana Torres"
   },
   {
     nome: "André Pereira",
@@ -566,49 +566,67 @@ function processButtonAction(button, item) {
   const isFastTable = document.getElementById("fast-table");
   const nextItem = item.nextElementSibling;
 
+  // Get the justificativa index from the row's ID (assuming IDs are set as `item{index}`)
+  const itemId = item.id.replace('item', ''); // e.g., item0 -> 0
+  const justificativaIndex = parseInt(itemId, 10);  // Get the index of the justificativa
+
+  // Ensure the index is valid
+  if (isNaN(justificativaIndex) || justificativaIndex >= justificativas.length) return;
+
+  const justificativa = justificativas[justificativaIndex]; // Get the corresponding justificativa object
+
+  // Handle "Aprovar" button click
   if (button.classList.contains('button-aproved')) {
+    // Update the justificativa's status in the array
+    justificativa.status = 'Aprovado';
+
+    // Update the status in the UI (as you're already doing)
     updateStatus(item, 'Aprovado', false, 'green');
+
+    // Auto-select the next item in the fast table (optional)
     if (isFastTable && nextItem) {
       nextItem.classList.add('selected');
     }
   }
 
+  // Handle "Recusar" button click
   if (button.classList.contains('button-deny')) {
-    enterDenyMode(item);
+    enterDenyMode(item, justificativaIndex); // Modified to pass the index of the justificativa
   }
 
+  // Handle "Voltar" button in recusa mode
   if (button.classList.contains('button-voltar')) {
     exitDenyMode(item);
   }
 
+  // Handle file button click
   if (button.classList.contains('button-file')) {
     showFileModal();
   }
 }
 
-// Helper to update status
+// Update the status text in the array and the UI
 function updateStatus(item, statusText, reason, color) {
   const statusContainer = item.querySelector('.status');
-    if  (reason) {
-      statusContainer.innerHTML = `
+  if (reason) {
+    statusContainer.innerHTML = `
       <p class="flex items-center justify-center text-${color}-500 font-bold space-x-1">
         <span class="material-symbols-outlined text-sm">check_circle</span>
         <span class="status-text">${statusText}</span>
       </p>
-      <p class="text-gray">${reason}</p>`
-    }
-    else {
-      statusContainer.innerHTML = `
+      <p class="text-gray">${reason}</p>`;
+  } else {
+    statusContainer.innerHTML = `
       <p class="flex items-center justify-center text-${color}-500 font-bold space-x-1">
         <span class="material-symbols-outlined text-sm">check_circle</span>
         <span class="status-text">${statusText}</span>
-      </p>`
-    }
+      </p>`;
+  }
   item.classList.remove('selected');
 }
 
-// Handles entering denial mode
-function enterDenyMode(item) {
+// Handle entering deny mode
+function enterDenyMode(item, justificativaIndex) {
   item.classList.add('recusa-mode');
   const reasonInput = item.querySelector('#recusa-motivo');
   reasonInput.focus();
@@ -617,13 +635,17 @@ function enterDenyMode(item) {
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const reason = reasonInput.value;
-    
+
     // Update the status in both the modal and the row
     updateStatus(item, `Recusado:`, reason, 'red');
 
+    // Update the justificativa's status in the array
+    justificativas[justificativaIndex].status = 'Recusado';
+    justificativas[justificativaIndex].reason = reason;
+
     // Hide the recusa form and exit denial mode
     item.classList.remove('recusa-mode');
-    
+
     // Auto-select the next item in the list if it exists
     const nextItem = item.nextElementSibling;
     if (nextItem) {
@@ -633,10 +655,11 @@ function enterDenyMode(item) {
   });
 }
 
-// Handles exiting denial mode
+// Handle exiting deny mode
 function exitDenyMode(item) {
   item.classList.remove('recusa-mode');
 }
+
 
 // Displays file modal
 function showFileModal() {
