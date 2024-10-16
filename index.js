@@ -239,7 +239,7 @@ function createRowFromTemplate(templateRow, justificativa, index) {
   const newRow = templateRow.cloneNode(true);
   newRow.style.display = ""; // Make it visible
   newRow.removeAttribute("id"); // Remove id to avoid duplicates
-  newRow.id = `item${index + 1}`; // Unique id
+  newRow.id = `item${index}`; // Unique id
   populateRowData(newRow, justificativa);
   return newRow;
 }
@@ -300,7 +300,7 @@ function renderTable(tableBodyId, templateRowId, tableType) {
     const newRow = templateRow.cloneNode(true);
     newRow.style.display = ""; // Make it visible
     newRow.removeAttribute("id"); // Remove id to avoid duplicates
-    newRow.id = `item${index + 1}`; // Unique id
+    newRow.id = `item${index}`; // Unique id
 
     populateRowData(newRow, justificativa, tableType);
     tableBody.appendChild(newRow);
