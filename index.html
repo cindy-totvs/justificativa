@@ -94,13 +94,6 @@
       </a>
     </div>
     <div class="bg-white p-6 rounded-lg shadow mb-6">
-      <details class="mb-5">
-      <summary class="h-12 flex items-center border font-bold p-2 rounded size-fit">
-          <span class="material-symbols-outlined">
-          filter_alt
-          </span>
-          Ver filtros
-      </summary>
       <div class="flex gap-4 mb-4 items-end">
         <div class="w-full">
           <label class=" block text-gray-700" for="start-date">
@@ -121,8 +114,8 @@
           <select name="status" class="h-12 w-full border border-gray-300 p-2 pr-4 rounded" id="status">
             <option value="Todos">Todos</option>
             <option value="Pendente">Pendente</option>
-            <option value="Aprovada">Aprovada</option>
-            <option value="Recusada">Recusada</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Recusado">Recusado</option>
           </select>
         </div>
         <button class="h-12 bg-blue-500 text-white px-4 py-2 rounded w-full filter-button">
@@ -141,7 +134,6 @@
       </span>
       <input class="h-12 w-full border border-gray-300 p-2 rounded pl-10" placeholder="Pesquisar por pessoas, datas, localizações..." type="text"/>
       </div>
-      </details>
     <div class="overflow-x-auto">
       <table class="min-w-full justificativa-table" id="fast-table">
         <thead class="bg-white">
@@ -170,10 +162,12 @@
                 </p>
                 <p class="pt-1" data-day></p>
                 <ul class="flex items-center space-x-2">
-                  <li class="time-box time-box-added"><span class="material-symbols-outlined text-base">add</span><span data-edited-hour>08:00</span></li>
-                  <li class="time-box" data-register-1>12:00</li>
-                  <li class="time-box" data-register-2>13:00</li>
-                  <li class="time-box" data-register-3>18:00</li>
+                  <li class="time-box" data-edited-box><span class="material-symbols-outlined text-base icon-add">add</span><span class="material-symbols-outlined text-base icon-remove">remove</span><span data-edited-hour>08:00</span></li>
+                  <li class="time-box" data-batida1></li>
+                  <li class="time-box" data-batida2></li>
+                  <li class="time-box" data-batida3></li>
+                  <li class="time-box" data-batida4></li>
+                  <li class="time-box" data-batida5></li>
                 </ul>
                 <ul class="hours pt-2">
                   <li><span class="font-bold">Horas antes do ajuste: </span><span data-total-before>-07:00</span></li>
@@ -184,7 +178,7 @@
             <td class="py-2 px-4">
              <div class="width-300 flex flex-col justify-center items-center space-y-4">
                <div class="status pt-3 flex flex-col items-center">
-                 <p class="flex items-center text-yellow-500 font-bold"><span class="material-symbols-outlined text-base">fiber_manual_record</span>
+                 <p class="flex items-center text-yellow-500 font-bold">
                    <span class="status-text" data-status>Pendente</span>
                  </p>
                </div>

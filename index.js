@@ -1,93 +1,14 @@
 const justificativas = [
   {
-    nome: "Samuel Bitencourt",
-    matricula: "839583",
-    local: "Matriz",
-    mensagem: "Realizei um ajuste no ponto devido a uma inconsistência no horário registrado.",
-    timestamp: "08:03 - 21/06/24",
-    adjustmentType: "Inclusão de batida",
-    day: "Sexta, 20/09/2024",
-    editedHour: "08:00",
-    totalBefore: "-07:00",
-    totalAfter: "08:00",
-    status: "Pendente"
-  },
-  {
-    nome: "Flávio Pereira",
-    matricula: "734829",
-    local: "Filial",
-    mensagem: "Esqueci de registrar o ponto na entrada.",
-    timestamp: "09:15 - 18/09/24",
-    adjustmentType: "Inclusão de batida",
-    day: "Quarta, 18/09/2024",
-    editedHour: "09:00",
-    totalBefore: "-06:00",
-    totalAfter: "07:00",
-    status: "Pendente"
-  },
-  {
-    nome: "Maria Silva",
-    matricula: "948362",
-    local: "Matriz",
-    mensagem: "Corrigi meu ponto devido a atraso no sistema.",
-    timestamp: "11:22 - 15/06/24",
-    adjustmentType: "Desconsiderar batida",
-    day: "Segunda, 15/09/2024",
-    editedHour: "08:10",
-    totalBefore: "-07:30",
-    totalAfter: "07:45",
-    status: "Pendente"
-  },
-  {
-    nome: "Lucas Almeida",
-    matricula: "563728",
-    local: "Filial",
-    mensagem: "Atestado médico",
-    timestamp: "10:45 - 12/06/24",
-    adjustmentType: "Abono",
-    day: "Quinta, 12/09/2024",
-    editedHour: "07:50",
-    totalBefore: "-06:50",
-    totalAfter: "07:00",
-    file: true, 
-    reason: "Atestado médico",
-    status: "Pendente"
-  },
-  {
-    nome: "Carla Mendes",
-    matricula: "273849",
-    local: "Matriz",
-    mensagem: "Adicionei uma batida esquecida.",
-    timestamp: "09:05 - 10/06/24",
-    adjustmentType: "Inclusão de batida",
-    day: "Terça, 10/09/2024",
-    editedHour: "08:05",
-    totalBefore: "-07:45",
-    totalAfter: "08:00",
-    status: "Pendente"
-  },
-  {
-    nome: "Ricardo Costa",
-    matricula: "637492",
-    local: "Filial",
-    mensagem: "Alteração devido a uma reunião externa.",
-    timestamp: "16:30 - 09/06/24",
-    adjustmentType: "Desconsiderar batida",
-    day: "Segunda, 09/09/2024",
-    editedHour: "13:30",
-    totalBefore: "-05:30",
-    totalAfter: "06:30",
-    status: "Pendente"
-  },
-  {
     nome: "Fernanda Souza",
     matricula: "485920",
     local: "Matriz",
     mensagem: "Modifiquei o ponto devido a falha no registro.",
     timestamp: "08:20 - 05/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Quinta, 05/09/2024",
+    day: "Quinta, 05/06/2024",
     editedHour: "07:55",
+    batidas: ["07:55", "12:00", "13:00", "17:00"],
     totalBefore: "-07:40",
     totalAfter: "07:55",
     status: "Pendente"
@@ -99,11 +20,13 @@ const justificativas = [
     mensagem: "Esqueci de marcar a saída e ajustei manualmente.",
     timestamp: "17:15 - 04/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Quarta, 04/09/2024",
+    day: "Quarta, 04/06/2024",
     editedHour: "17:00",
+    batidas: ["08:00", "12:00", "13:00"],
     totalBefore: "-08:00",
     totalAfter: "08:15",
-    status: "Pendente"
+    status: "Aprovado",
+    responsible: "José Souza"
   },
   {
     nome: "Bruna Oliveira",
@@ -112,8 +35,9 @@ const justificativas = [
     mensagem: "Inclusão de batida para compensar horas.",
     timestamp: "08:50 - 02/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Segunda, 02/09/2024",
+    day: "Segunda, 02/06/2024",
     editedHour: "08:10",
+    batidas: ["08:10", "12:00", "13:00", "17:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -125,40 +49,70 @@ const justificativas = [
     mensagem: "Ajustei o ponto por esquecimento de marcação.",
     timestamp: "09:25 - 01/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Sexta, 01/09/2024",
+    day: "Sexta, 01/06/2024",
     editedHour: "09:00",
+    batidas: ["09:00", "12:00", "13:00", "17:00"],
     totalBefore: "-07:15",
     totalAfter: "07:30",
     status: "Pendente"
   },
   {
-    nome: "Ana Costa",
-    matricula: "123456",
+    nome: "Maria Silva",
+    matricula: "948362",
     local: "Matriz",
-    mensagem: "Atestado médico por um dia.",
-    timestamp: "10:00 - 20/09/24",
+    mensagem: "Corrigi meu ponto devido a atraso no sistema.",
+    timestamp: "11:22 - 15/06/24",
+    adjustmentType: "Desconsiderar batida",
+    day: "Segunda, 15/06/2024",
+    editedHour: "08:10",
+    batidas: ["07:55", "12:00", "12:30", "17:10"],
+    totalBefore: "-07:30",
+    totalAfter: "07:45",
+    status: "Pendente"
+  },
+  {
+    nome: "Lucas Almeida",
+    matricula: "563728",
+    local: "Filial",
+    mensagem: "Atestado médico",
+    timestamp: "10:45 - 12/06/24",
     adjustmentType: "Abono",
-    day: "Quinta, 20/09/2024",
-    editedHour: "00:00",
+    day: "Quinta, 12/06/2024",
+    editedHour: "00:00 - 23:59",
+    batidas: [],
     totalBefore: "-08:00",
     totalAfter: "08:00",
     file: true,
     reason: "Atestado médico",
+    status: "Aprovado",
+    responsible: "Carlos Oliveira"
+  },
+  {
+    nome: "Carla Mendes",
+    matricula: "273849",
+    local: "Matriz",
+    mensagem: "Adicionei uma batida esquecida.",
+    timestamp: "09:05 - 10/06/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Terça, 10/06/2024",
+    editedHour: "08:05",
+    batidas: ["08:05", "12:00", "13:00"],
+    totalBefore: "-07:45",
+    totalAfter: "08:00",
     status: "Pendente"
   },
   {
-    nome: "João Silva",
-    matricula: "345678",
+    nome: "Ricardo Costa",
+    matricula: "637492",
     local: "Filial",
-    mensagem: "Cheguei mais tarde devido a uma consulta médica.",
-    timestamp: "09:30 - 10/10/24",
-    adjustmentType: "Abono",
-    day: "Quinta, 10/10/2024",
-    editedHour: "09:00",
-    totalBefore: "-07:00",
-    totalAfter: "08:00",
-    file: true,
-    reason: "Consulta médica",
+    mensagem: "Alteração devido a uma reunião externa.",
+    timestamp: "16:30 - 09/06/24",
+    adjustmentType: "Desconsiderar batida",
+    day: "Segunda, 09/06/2024",
+    editedHour: "13:30",
+    batidas: ["07:55", "12:00", "13:30", "17:00", "18:00"],
+    totalBefore: "-05:30",
+    totalAfter: "06:30",
     status: "Pendente"
   },
   {
@@ -166,23 +120,40 @@ const justificativas = [
     matricula: "654321",
     local: "Filial",
     mensagem: "Esqueci de registrar a entrada.",
-    timestamp: "08:15 - 19/09/24",
+    timestamp: "08:15 - 19/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Quarta, 19/09/2024",
+    day: "Quarta, 19/06/2024",
     editedHour: "08:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
     totalBefore: "-07:00",
     totalAfter: "08:00",
     status: "Pendente"
+  },
+  {
+    nome: "Flávio Pereira",
+    matricula: "734829",
+    local: "Filial",
+    mensagem: "Esqueci de registrar o ponto na entrada.",
+    timestamp: "09:15 - 18/06/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Quarta, 18/06/2024",
+    editedHour: "09:00",
+    batidas: ["09:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-06:00",
+    totalAfter: "07:00",
+    status: "Recusado",
+    responsible: "Joana Silva"
   },
   {
     nome: "Renata Almeida",
     matricula: "789012",
     local: "Matriz",
     mensagem: "Corrigi um erro no registro anterior.",
-    timestamp: "09:30 - 17/09/24",
+    timestamp: "09:30 - 17/06/24",
     adjustmentType: "Desconsiderar batida",
-    day: "Terça, 17/09/2024",
+    day: "Terça, 17/06/2024",
     editedHour: "09:15",
+    batidas: ["07:55", "12:00", "13:00", "17:00", "18:00"],
     totalBefore: "-07:30",
     totalAfter: "08:00",
     status: "Pendente"
@@ -192,12 +163,44 @@ const justificativas = [
     matricula: "890123",
     local: "Filial",
     mensagem: "Ajuste no ponto por motivo pessoal.",
-    timestamp: "10:50 - 16/09/24",
+    timestamp: "10:50 - 16/06/24",
     adjustmentType: "Inclusão de batida",
-    day: "Segunda, 16/09/2024",
+    day: "Segunda, 16/06/2024",
     editedHour: "10:00",
+    batidas: ["08:00", "12:00", "13:00"],
     totalBefore: "-06:30",
     totalAfter: "07:30",
+    status: "Aprovado",
+    responsible: "Fernanda Lopes"
+  },
+  {
+    nome: "Ana Costa",
+    matricula: "123456",
+    local: "Matriz",
+    mensagem: "Atestado médico por um dia.",
+    timestamp: "10:00 - 20/06/24",
+    adjustmentType: "Abono",
+    day: "Quinta, 20/06/2024",
+    editedHour: "00:00 - 23:59",
+    batidas: [],
+    totalBefore: "-08:00",
+    totalAfter: "08:00",
+    file: true,
+    reason: "Atestado médico",
+    status: "Pendente"
+  },
+  {
+    nome: "Samuel Bitencourt",
+    matricula: "839583",
+    local: "Matriz",
+    mensagem: "Realizei um ajuste no ponto devido a uma inconsistência no horário registrado.",
+    timestamp: "08:03 - 21/06/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Sexta, 20/06/2024",
+    editedHour: "08:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:00",
+    totalAfter: "08:00",
     status: "Pendente"
   },
   {
@@ -208,7 +211,8 @@ const justificativas = [
     timestamp: "11:15 - 15/09/24",
     adjustmentType: "Abono",
     day: "Domingo, 15/09/2024",
-    editedHour: "00:00",
+    editedHour: "00:00 - 23:59",
+    batidas: [],
     totalBefore: "-08:00",
     totalAfter: "08:00",
     file: true,
@@ -223,16 +227,173 @@ const justificativas = [
     timestamp: "10:00 - 14/10/24",
     adjustmentType: "Abono",
     day: "Segunda, 14/10/2024",
-    editedHour: "00:00",
+    editedHour: "00:00 - 23:59",
+    batidas: [],
     totalBefore: "-08:00",
     totalAfter: "08:00",
     file: true,
     reason: "Doação de sangue",
+    status: "Aprovado",
+    responsible: "Ana Torres"
+  },
+  {
+    nome: "Mariana Costa",
+    matricula: "983271",
+    local: "Matriz",
+    mensagem: "Realizei um ajuste no ponto devido a uma inconsistência no horário registrado.",
+    timestamp: "08:03 - 21/06/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Sexta, 20/06/2024",
+    editedHour: "08:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:00",
+    totalAfter: "08:00",
+    status: "Recusado",
+    responsible: "Fulano de Tal"
+  },
+  {
+    nome: "André Pereira",
+    matricula: "839581",
+    local: "Filial",
+    mensagem: "Corrigi o ponto devido a falha no sistema.",
+    timestamp: "10:05 - 08/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Quinta, 08/10/2024",
+    editedHour: "10:00",
+    batidas: ["10:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:00",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Letícia Souza",
+    matricula: "123487",
+    local: "Matriz",
+    mensagem: "Adicionei batida para corrigir erro no registro.",
+    timestamp: "09:50 - 15/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Terça, 15/10/2024",
+    editedHour: "09:00",
+    batidas: ["09:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:30",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Eduardo Lima",
+    matricula: "893247",
+    local: "Filial",
+    mensagem: "Correção de ponto devido a erro de marcação.",
+    timestamp: "11:30 - 14/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Quarta, 14/10/2024",
+    editedHour: "08:05",
+    batidas: ["08:05", "12:00", "13:00", "17:00"],
+    totalBefore: "-06:45",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Giovana Almeida",
+    matricula: "129457",
+    local: "Matriz",
+    mensagem: "Correção de horário de entrada.",
+    timestamp: "07:45 - 10/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Quinta, 10/10/2024",
+    editedHour: "08:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:00",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Isabela Duarte",
+    matricula: "230497",
+    local: "Filial",
+    mensagem: "Adicionei batida por esquecimento de marcação.",
+    timestamp: "08:10 - 12/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Domingo, 12/10/2024",
+    editedHour: "08:05",
+    batidas: ["08:05", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:15",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Cláudio Ribeiro",
+    matricula: "239487",
+    local: "Matriz",
+    mensagem: "Esqueci de marcar a saída.",
+    timestamp: "17:20 - 10/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Sexta, 10/10/2024",
+    editedHour: "17:00",
+    batidas: ["08:00", "12:00", "13:00"],
+    totalBefore: "-08:00",
+    totalAfter: "08:00",
+    status: "Aprovado",
+    responsible: "Ana Pereira"
+  },
+  {
+    nome: "Luana Teixeira",
+    matricula: "394875",
+    local: "Filial",
+    mensagem: "Correção de ponto por falha no sistema.",
+    timestamp: "11:50 - 12/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Sexta, 12/10/2024",
+    editedHour: "11:45",
+    batidas: ["11:45", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:00",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Pedro Martins",
+    matricula: "789123",
+    local: "Filial",
+    mensagem: "Esqueci de registrar a saída.",
+    timestamp: "17:15 - 13/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Segunda, 13/10/2024",
+    editedHour: "17:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:30",
+    totalAfter: "08:00",
+    status: "Recusado",
+    responsible: "Juliana Martins"
+  },
+  {
+    nome: "Patrícia Costa",
+    matricula: "238491",
+    local: "Matriz",
+    mensagem: "Correção de batida por erro no sistema.",
+    timestamp: "08:15 - 14/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Segunda, 14/10/2024",
+    editedHour: "08:00",
+    batidas: ["08:00", "12:00", "13:00", "17:00"],
+    totalBefore: "-07:30",
+    totalAfter: "08:00",
+    status: "Pendente"
+  },
+  {
+    nome: "Daniel Almeida",
+    matricula: "384297",
+    local: "Filial",
+    mensagem: "Adicionei batida por esquecimento de marcação.",
+    timestamp: "09:10 - 13/10/24",
+    adjustmentType: "Inclusão de batida",
+    day: "Sexta, 13/10/2024",
+    editedHour: "08:55",
+    batidas: ["08:55", "12:00", "13:00", "17:00"],
+    totalBefore: "-06:45",
+    totalAfter: "08:00",
     status: "Pendente"
   }
 ];
-
-
 
 // Helper to create a new row from template and populate with data
 function createRowFromTemplate(templateRow, justificativa, index) {
@@ -257,13 +418,60 @@ function populateRowData(row, justificativa, tableType) {
     '[data-edited-hour]': justificativa.editedHour,
     '[data-total-before]': justificativa.totalBefore,
     '[data-total-after]': justificativa.totalAfter,
-    '[data-status]': justificativa.status
-  };
+    '[data-status]': justificativa.status,
+    '[data-responsible]': justificativa.responsible,
+    // Batidas dinamicamente mapeadas
+    '[data-batida1]': justificativa.batidas[0] || '',
+    '[data-batida2]': justificativa.batidas[1] || '',
+    '[data-batida3]': justificativa.batidas[2] || '',
+    '[data-batida4]': justificativa.batidas[3] || '',
+    '[data-batida5]': justificativa.batidas[4] || ''
+  };  
 
   for (let selector in elementsMap) {
     const element = row.querySelector(selector);
-    if (element) { // Only set text if the element exists
-      element.textContent = elementsMap[selector];
+    if (element) {
+      if (elementsMap[selector] === '') {
+        // Adiciona a classe 'hidden' se o valor estiver vazio
+        element.classList.add('hidden');
+      } else {
+        element.textContent = elementsMap[selector];
+        element.classList.remove('hidden'); // Garante que esteja visível caso tenha conteúdo
+      }
+    }
+  }
+
+  const statusContainer = row.querySelector('[data-status]');
+  if (statusContainer) {
+    const statusText = justificativa.status;
+    let color = 'yellow'; 
+    let icon = 'fiber_manual_record'
+    if (statusText === "Aprovado") {
+      color = 'green';
+      icon = 'check_circle'
+    } else if (statusText === "Recusado") {
+      color = 'red';
+      icon = 'cancel'
+    }
+
+    statusContainer.innerHTML = `
+    <p class="flex items-center justify-center text-${color}-500 font-bold space-x-1">
+      <span class="material-symbols-outlined text-sm">${icon}</span>
+      <span class="status-text">${statusText}</span>
+    </p>`;
+  }
+
+  const editedHourElement = row.querySelector("[data-edited-box]");
+  if (editedHourElement) {
+    if (justificativa.adjustmentType === "Inclusão de batida" ||  justificativa.adjustmentType === "Abono") {
+
+      editedHourElement.classList.add('time-box-added');
+      editedHourElement.classList.remove('time-box-removed');
+    } else if (justificativa.adjustmentType === "Desconsiderar batida") {
+      editedHourElement.classList.add('time-box-removed');
+      editedHourElement.classList.remove('time-box-added');
+    } else {
+      editedHourElement.classList.remove('time-box-added', 'time-box-removed');
     }
   }
 

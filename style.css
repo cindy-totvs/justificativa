@@ -1,6 +1,6 @@
 .material-symbols-outlined {
   font-variation-settings:
-  'FILL' 0,
+  'FILL' 0,url(index.html)
   'wght' 400,
   'GRAD' 0,
   'opsz' 24
@@ -31,6 +31,18 @@
 .time-box-added {
   display: flex;
 }
+.time-box-added > .icon-add {
+  display: block;
+}
+.time-box-added > .icon-remove {
+  display: none;
+}
+.time-box-removed > .icon-add {
+  display: none;
+}
+.time-box-removed > .icon-remove {
+  display: block;
+}
 .selected .time-box {
   display: flex;
   background-color: rgb(243 243 243);
@@ -41,6 +53,11 @@
 .selected .time-box-added {
   background-color: rgb(219 250 190);
   color: #106b1f;
+  font-weight: 500;
+}
+.selected .time-box-removed {
+  background-color: rgb(250 190 190);
+  color: #6b1010;
   font-weight: 500;
 }
 .flip {
