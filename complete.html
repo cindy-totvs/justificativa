@@ -84,15 +84,15 @@
       </div>
      </div>
     </div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between">
       <h1 class="text-4xl font-bold mb-6">
       Justificativas
       </h1>
-      <a href="index.html">
-        <div class="mdl-switch is-checked" for="switch-1" data-upgraded=",MaterialSwitch,MaterialRipple">
-          <span class="ml-12 mr-4 font-bold">Visualização em tabela</span>
-          <div class="mdl-switch__track"></div><div class="mdl-switch__thumb"></div>
-        </div>
+      <a href="index.html" class="bg-blue-500 text-white px-4 py-2 rounded-md size-fit button-apuracao flex">
+        <span class="material-symbols-outlined mr-2">
+          library_add_check
+        </span>
+        <span class="font-bold">Modo de aprovação rápida</span>
       </a>
     </div>
     <div class="bg-white p-6 rounded-lg shadow mb-6">
@@ -139,8 +139,8 @@
      <div class="scroll-wrapper">
       <div class="scroll-gradient-left"></div>
       <div class="scroll-gradient-right"></div>
-      <div class="overflow-x-auto scrollable-table">
-        <table class="min-w-full bg-white justificativa-table" id="complete-table">
+      <div class="overflow-x-auto scrollable-table parent">
+        <table class="min-w-full bg-white justificativa-table child" id="complete-table">
           <thead>
             <tr id="head-unchecked" class="w-full bg-gray-100 text-gray-600 leading-normal">
               <th class="py-3 px-6 text-left whitespace-nowrap">
@@ -209,12 +209,12 @@
               <td class="py-3 px-6 size-fit sticky-col">
                 <div class="complete-justificativa-buttons space-x-2">
                   <button class="p-1 button-aproved relative tooltip-parent">
-                    <span class="material-symbols-outlined">check_circle</span>
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
                     <span class="tooltip-text">Aprovar</span>
                   </button>
                 
                   <button class="p-1 button-deny relative tooltip-parent">
-                    <span class="material-symbols-outlined">cancel</span>
+                    <span class="material-symbols-outlined text-red-600">cancel</span>
                     <span class="tooltip-text">Recusar</span>
                   </button>
                 

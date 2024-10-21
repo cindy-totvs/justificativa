@@ -72,8 +72,20 @@
 .fast-justificativa-buttons {
   display: none;
 }
-.selected .fast-justificativa-buttons {
+.selected.pending .fast-justificativa-buttons {
   display: flex;
+}
+.button-aproved {
+  display: none;
+}
+.button-deny {
+  display: none;
+}
+.pending .button-aproved {
+  display:  inline-block;
+}
+.pending .button-deny {
+  display:  inline-block;
 }
 .recusa-form {
   display: none;
@@ -90,6 +102,9 @@
 .recusa-mode .recusa-form {
   display: flex;
 } 
+.complete-justificativa-buttons {
+  text-align: right;
+}
 .recusa-mode .complete-justificativa-buttons {
   display: none;
 }
@@ -160,7 +175,7 @@ nav a {
 .scroll-gradient-left,
 .scroll-gradient-right {
   position: absolute;
-  top: 0;
+  top: 10;
   bottom: 0;
   width: 60px; /* Adjust as needed */
   z-index: 2;
@@ -255,4 +270,11 @@ nav a {
 .tooltip-parent:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+.parent {
+  transform: rotateX(180deg);
+  overflow-x: auto;
+} 
+.child {
+  transform: rotateX(180deg);
 }

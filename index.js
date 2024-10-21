@@ -233,8 +233,7 @@ const justificativas = [
     totalAfter: "08:00",
     file: true,
     reason: "Doação de sangue",
-    status: "Aprovado",
-    responsible: "Ana Torres"
+    status: "Pendente"
   },
   {
     nome: "Mariana Costa",
@@ -452,6 +451,9 @@ function populateRowData(row, justificativa, tableType) {
     } else if (statusText === "Recusado") {
       color = 'red';
       icon = 'cancel'
+    } else if (statusText === "Pendente") {
+      row.classList.add('pending');
+
     }
 
     statusContainer.innerHTML = `
